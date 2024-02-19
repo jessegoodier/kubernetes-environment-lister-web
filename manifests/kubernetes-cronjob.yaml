@@ -1,0 +1,31 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: list-environments
+spec:
+  schedule: "*/5 * * * *" # every 5 minutes
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          serviceAccountName: environment-lister-sa
+          restartPolicy: Never
+          containers:
+          - name: list-environments
+            image: jgoodier/markdown2-kubectl:0.0.1
+            command: ["/usr/bin/python", "/apps/kubectl-script-table.py"]
+            imagePullPolicy: IfNotPresent
+            volumeMounts:
+            - name: config-volume
+              mountPath: /apps
+            - name: docs
+              mountPath: /apps/docs
+          volumes:
+          - name: config-volume
+            configMap:
+              name: environment-script
+              items:
+              - key: kubectl-script-table.py
+                path: kubectl-script-table.py
+          - name: docs
+            emptyDir: {}

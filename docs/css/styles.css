@@ -1,0 +1,42 @@
+body {
+    background-color: #1E1E1E;
+    color: #FFFFFF;
+    font-family: 'Roboto', sans-serif;
+}
+
+a {
+    color: #1DB954;
+}
+
+a:hover {
+    color: #1ED760;
+}
+
+table {
+    /* width: 100%; */
+    border-collapse: collapse;
+    /* margin: 20px 0; */
+}
+
+table, th, td {
+    border: 1px solid #1DB954;
+}
+
+th, td {
+    padding: 5px;
+    text-align: left;
+}
+
+th {
+    background-color: #1DB954;
+    color: #FFFFFF;
+}
+
+tr:nth-child(even) {
+    background-color: #2E2E2E;
+}
+
+tr:hover {
+    background-color: #1ED760;
+    color: #FFFFFF;
+}

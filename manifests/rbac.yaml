@@ -1,0 +1,54 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: script-clusterrole
+rules:
+- apiGroups: [""]
+  resources: ["pods"]
+  verbs: ["get", "list"]
+- apiGroups: ["networking.k8s.io"]
+  resources: ["ingresses"]
+  verbs: ["get", "list"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: manage-configmaps
+  namespace: environment-lister
+rules:
+- apiGroups: [""]
+  resources: ["configmaps"]
+  verbs: ["delete", "get", "list", "create"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: manage-configmaps
+  namespace: environment-lister
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: manage-configmaps
+subjects:
+- kind: ServiceAccount
+  name: environment-lister-sa
+  namespace: environment-lister
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: script-clusterrolebinding
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: script-clusterrole
+subjects:
+- kind: ServiceAccount
+  name: environment-lister-sa
+  namespace: environment-lister
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: environment-lister-sa
+  namespace: environment-lister

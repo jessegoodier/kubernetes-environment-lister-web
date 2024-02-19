@@ -1,0 +1,60 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: environment-lister
+  namespace: environment-lister
+  labels:
+    app: environment-lister
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: environment-lister
+  template:
+    metadata:
+      labels:
+        app: environment-lister
+    spec:
+      containers:
+      - name: environment-lister
+        image: nginxinc/nginx-unprivileged
+        ports:
+          - containerPort: 8080
+            protocol: TCP
+        resources: {}
+        imagePullPolicy: IfNotPresent
+        volumeMounts:
+        - mountPath: /usr/share/nginx/html
+          name: html
+          readOnly: true
+        - mountPath: /usr/share/nginx/html/css
+          name: css
+          readOnly: true
+      volumes:
+      - name: html
+        configMap:
+          name: html
+          items:
+            - key: index.html
+              path: index.html
+      - name: css
+        configMap:
+          name: styles-css
+          items:
+            - key: styles.css
+              path: styles.css
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: environment-lister
+  namespace: environment-lister
+spec:
+  ports:
+    - name: environment-lister
+      protocol: TCP
+      port: 8080
+      targetPort: 8080
+  selector:
+    app: environment-lister
+  type: ClusterIP
