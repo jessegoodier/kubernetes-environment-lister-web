@@ -72,6 +72,7 @@ header = f"""
 <html>
 <head>
     <title>envs on {ClusterName}</title>
+    <link rel="icon" href="https://raw.githubusercontent.com/jessegoodier/kubernetes-environment-lister-web/main/docs/favicon.ico" type="image/x-icon">
     <link rel="stylesheet" type="text/css" href="css/styles.css">
 </head><body>
 """
