@@ -7,7 +7,7 @@ Find all the namespaces with ingresses and list the pods/containers/images
 Clone this repo:
 
 ```sh
-gh repo clone jessegoodier/kubernetes-web-environment-lister
+git clone git@github.com:jessegoodier/kubernetes-environment-lister-web.git
 ```
 
 Edit the manifests to fit your needs and:
