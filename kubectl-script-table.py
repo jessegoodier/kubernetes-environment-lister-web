@@ -58,15 +58,6 @@ for ns in namespaces:
 import subprocess
 html_output = subprocess.run(["markdown2", "-x", "tables", "docs/index.md"],capture_output=True, text=True)
 
-# output = html_output.stdout
-# Write the output to a file
-# with open('output.txt', 'w') as file:
-#     file.write(output)
-
-# Print the file
-# with open("docs/index.md", "r") as f:
-#     print(f.read())
-
 header = f"""
 <!DOCTYPE html>
 <html>
@@ -84,4 +75,4 @@ with open("docs/index.html", "w") as f:
 
 delete_cm = subprocess.run(["kubectl", "delete", "configmap", "html", "-n", "environment-lister"])
 create_cm = subprocess.run(["kubectl", "create", "configmap", "html", "-n", "environment-lister", "--from-file", "docs/index.html"])
-
+restart_pod = subprocess.run(["kubectl", "rollout", "restart", "deployment", "environment-lister", "-n", "environment-lister"])
