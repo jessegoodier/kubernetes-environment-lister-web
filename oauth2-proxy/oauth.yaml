@@ -1,8 +1,0 @@
-
-config:
-  clientID: "abc.apps.googleusercontent.com"
-  clientSecret: "defgh"
-  cookieSecret: "ijklmnop"
-  configFile: |-
-    email_domains = [ "your.com" ]
-    upstreams = [ "http://environment-lister:8080" ]

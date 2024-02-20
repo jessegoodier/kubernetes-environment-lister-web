@@ -1,0 +1,20 @@
+
+config:
+  clientID: "abc.apps.googleusercontent.com"
+  clientSecret: "defgh"
+  cookieSecret: "ijklmnop"
+  configFile: |-
+    email_domains = [ "your.com" ]
+    upstreams = [ "http://environment-lister:8080" ]
+ingress:
+  enabled: true
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-http
+    nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+  className: nginx
+  hosts:
+  - envs.qa-azure.kubecost.com
+  tls:
+  - hosts:
+    - envs.qa-azure.kubecost.com
+    secretName: envs-ingress-tls

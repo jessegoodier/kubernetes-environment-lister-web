@@ -3,7 +3,7 @@ kind: CronJob
 metadata:
   name: list-environments
 spec:
-  schedule: "*/5 * * * *" # every 5 minutes
+  schedule: "*/13 * * * *" # every 13 minutes
   jobTemplate:
     spec:
       template:
@@ -12,20 +12,35 @@ spec:
           restartPolicy: Never
           containers:
           - name: list-environments
-            image: jgoodier/markdown2-kubectl:0.0.1
-            command: ["/usr/bin/python", "/apps/kubectl-script-table.py"]
+            image: jgoodier/markdown2-kubectl:0.0.4
+            command: ["/usr/bin/python", "/apps/list-environments.py"]
             imagePullPolicy: IfNotPresent
             volumeMounts:
             - name: config-volume
               mountPath: /apps
             - name: docs
               mountPath: /apps/docs
+            securityContext:
+              allowPrivilegeEscalation: false
+              privileged: false
+              readOnlyRootFilesystem: true
+              capabilities:
+                drop:
+                - ALL
           volumes:
           - name: config-volume
             configMap:
-              name: environment-script
+              name: list-environments
               items:
-              - key: kubectl-script-table.py
-                path: kubectl-script-table.py
+              - key: list-environments.py
+                path: list-environments.py
           - name: docs
             emptyDir: {}
+          securityContext:
+            runAsNonRoot: true
+            seccompProfile:
+              type: RuntimeDefault
+            fsGroup: 1001
+            runAsGroup: 1001
+            runAsUser: 1001
+            fsGroupChangePolicy: OnRootMismatch

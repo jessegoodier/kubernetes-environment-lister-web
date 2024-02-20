@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: environment-lister
+  name: environment-lister-web
   namespace: environment-lister
   labels:
     app: environment-lister
@@ -30,6 +30,15 @@ spec:
         - mountPath: /usr/share/nginx/html/css
           name: css
           readOnly: true
+        - mountPath: /tmp
+          name: tmp
+        securityContext:
+          allowPrivilegeEscalation: false
+          privileged: false
+          readOnlyRootFilesystem: true
+          capabilities:
+            drop:
+            - ALL
       volumes:
       - name: html
         configMap:
@@ -43,6 +52,16 @@ spec:
           items:
             - key: styles.css
               path: styles.css
+      - name: tmp
+        emptyDir: {}
+      securityContext:
+        runAsNonRoot: true
+        seccompProfile:
+          type: RuntimeDefault
+        fsGroup: 1001
+        runAsGroup: 1001
+        runAsUser: 1001
+        fsGroupChangePolicy: OnRootMismatch
 ---
 apiVersion: v1
 kind: Service

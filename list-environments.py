@@ -25,10 +25,12 @@ for ns in namespaces:
     # Get all ingress
     ingress = subprocess.run(["kubectl", "get", "ingress", "-n", ns, "-o", "json"], capture_output=True, text=True)
     ingress = json.loads(ingress.stdout)
-    ingress = [rule.get('host') for item in ingress.get('items', []) for rule in item.get('spec', {}).get('rules', [])]
+    ingress = [(rule.get('host'), path.get('path')) for item in ingress.get('items', []) for rule in item.get('spec', {}).get('rules', []) for path in rule.get('http', {}).get('paths', [])]
 
-    for i in ingress:
-        fqdn = f"\n<https://{i}>\n"
+    for host, path in ingress:
+        if '(' in path:
+            path = path.split('(')[0] + '/' # There will be more clean up to do here for more complex paths
+        fqdn = f"\n<https://{host}{path}>\n"
         with open("docs/index.md", "a") as f:
             f.write(fqdn)
             print(fqdn)

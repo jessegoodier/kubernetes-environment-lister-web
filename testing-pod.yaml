@@ -1,0 +1,45 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: list-environments-testing
+  namespace: environment-lister
+spec:
+  containers:
+  - command: ["/usr/bin/python", "/apps/list-environments.py"]
+    image: jgoodier/markdown2-kubectl:0.0.4
+    imagePullPolicy: IfNotPresent
+    name: list-environments
+    resources: {}
+    securityContext:
+      allowPrivilegeEscalation: false
+      capabilities:
+        drop:
+        - ALL
+      privileged: false
+      readOnlyRootFilesystem: true
+    volumeMounts:
+    - mountPath: /apps
+      name: config-volume
+    - mountPath: /apps/docs
+      name: docs
+  restartPolicy: Never
+  securityContext:
+    fsGroup: 1001
+    fsGroupChangePolicy: OnRootMismatch
+    runAsGroup: 1001
+    runAsNonRoot: true
+    runAsUser: 1001
+    seccompProfile:
+      type: RuntimeDefault
+  serviceAccount: environment-lister-sa
+  serviceAccountName: environment-lister-sa
+  volumes:
+  - configMap:
+      defaultMode: 420
+      items:
+      - key: list-environments.py
+        path: list-environments.py
+      name: list-environments
+    name: config-volume
+  - emptyDir: {}
+    name: docs
