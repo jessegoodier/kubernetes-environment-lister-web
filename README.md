@@ -2,7 +2,13 @@
 
 Simple tool to find all the namespaces with ingresses and list the pods/containers/images.
 
-We maintain many different configs for QA and this utility was created to help our engineers find specific images for testing.
+Why was this made?
+1. Easy method for the less cli-oriented folks to find environments to test against.
+2. Read-only cluster-wide visibility.
+3. No need for cluster-auth.
+4. Easy method for auth, for secure environments.
+
+At Kubecost, we maintain many different configs for QA and this utility was created to help our engineers find specific releases for testing.
 
 Shout out to all the AI tools for writing a majority of this.
 
@@ -17,6 +23,9 @@ This will expose every ingress in your cluster.  Please consider the security im
 
 See the [oauth2 readme](auth/oauth2-proxy/README.md) as an example of how to secure this.
 
+The service is exposed by an unprivileged (no service account and non-root) nginx web server.
+The cronJob that creates the html configMap has a serviceAccount with cluster-wide privileges to read the required resources and `reload restart` the nginx deployment.
+
 ## Usage
 
 Clone this repo:
@@ -30,7 +39,7 @@ Then:
 
 ```sh
 kubectl create ns environment-lister
-kubectl create cm get-environments -n environment-lister --from-file get_environments.py
+kubectl create cm get-environments-script -n environment-lister --from-file get_environments.py
 kubectl apply -f ./manifests -n environment-lister
 ```
 
