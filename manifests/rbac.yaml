@@ -4,11 +4,13 @@ metadata:
   name: script-clusterrole
 rules:
 - apiGroups: [""]
-  resources: ["pods"]
+  # secrets are needed for `helm list`
+  resources: ["pods", "secrets"]
   verbs: ["get", "list"]
 - apiGroups: ["networking.k8s.io"]
   resources: ["ingresses"]
   verbs: ["get", "list"]
+
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: Role

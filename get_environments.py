@@ -2,7 +2,7 @@ import subprocess
 import json
 import os
 
-ClusterName = "kc-integration-test"
+ClusterName = os.getenv("CLUSTER_NAME", "null")
 
 def delete_existing_file():
     # If docs/index.md exists, delete it
@@ -41,10 +41,18 @@ def write_ingress(host, path):
         f.write(fqdn)
         print(fqdn)
 
-def write_pod_container_image_table():
+def write_pod_container_image_table_open():
     with open("docs/index.md", "a") as f:
+        f.write("\n<details><summary>Pods</summary>\n\n")
         f.write("\n| Pod | Container Name | Image |\n")
+        print("\n| Pod | Container Name | Image |")
         f.write("| --- | -------------- | ----- |\n")
+        print("| --- | -------------- | ----- |")
+
+def write_pod_container_image_table_end():
+    with open("docs/index.md", "a") as f:
+        f.write("\n</details>\n")
+        f.write("<br>\n")
 
 def get_pods(ns):
     # Get all pods
@@ -106,21 +114,24 @@ def manage_configmap():
 
 # Call the functions
 delete_existing_file()
-write_cluster_name()
+if ClusterName != "null": write_cluster_name()
+
 namespaces = get_namespaces()
 
 for ns in namespaces:
-    write_namespace(ns)
-    ingress = get_ingress(ns)
-    for host, path in ingress:
-        write_ingress(host, path)
-    write_helm_list(ns)
-    write_pod_container_image_table()
     pods = get_pods(ns)
-    for p in pods:
-        container_names = get_container_names(ns, p)
-        for cn in container_names:
-            write_container_images(ns, p, cn)
+    if (len(pods))>0:
+        write_namespace(ns)
+        ingress = get_ingress(ns)
+        for host, path in ingress:
+            write_ingress(host, path)
+        write_helm_list(ns)
+        write_pod_container_image_table_open()
+        for p in pods:
+            container_names = get_container_names(ns, p)
+            for cn in container_names:
+                write_container_images(ns, p, cn)
+        write_pod_container_image_table_end()
 
 write_html_output()
 manage_configmap()

@@ -1,14 +1,18 @@
 apiVersion: v1
 kind: Pod
 metadata:
-  name: list-environments-testing
+  name: get-environments-testing
   namespace: environment-lister
 spec:
   containers:
-  - command: ["/usr/bin/python", "/apps/list-environments.py"]
+  - name: get-environments
+    command: ["/usr/bin/python", "/apps/get_environments.py"]
+    # command: ["sleep", "2000"]
     image: jgoodier/markdown2-kubectl:0.0.4
     imagePullPolicy: IfNotPresent
-    name: list-environments
+    env:
+    - name: CLUSTER_NAME
+      value: qa-gcp1
     resources: {}
     securityContext:
       allowPrivilegeEscalation: false
@@ -37,9 +41,9 @@ spec:
   - configMap:
       defaultMode: 420
       items:
-      - key: list-environments.py
-        path: list-environments.py
-      name: list-environments
+      - key: get_environments.py
+        path: get_environments.py
+      name: get-environments
     name: config-volume
   - emptyDir: {}
     name: docs

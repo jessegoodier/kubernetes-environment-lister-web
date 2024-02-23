@@ -1,7 +1,7 @@
 apiVersion: batch/v1
 kind: CronJob
 metadata:
-  name: list-environments
+  name: get-environments
 spec:
   schedule: "*/13 * * * *" # every 13 minutes
   jobTemplate:
@@ -11,10 +11,14 @@ spec:
           serviceAccountName: environment-lister-sa
           restartPolicy: Never
           containers:
-          - name: list-environments
+          - name: get-environments
             image: jgoodier/markdown2-kubectl:0.0.4
-            command: ["/usr/bin/python", "/apps/list-environments.py"]
             imagePullPolicy: IfNotPresent
+            ## if the cluster_name is set, it will be printed at the top of the page
+            # env:
+            # - name: CLUSTER_NAME
+            #   value: qa-gcp1
+            command: ["/usr/bin/python", "/apps/get_environments.py"]
             volumeMounts:
             - name: config-volume
               mountPath: /apps
@@ -30,10 +34,10 @@ spec:
           volumes:
           - name: config-volume
             configMap:
-              name: list-environments
+              name: get-environments
               items:
-              - key: list-environments.py
-                path: list-environments.py
+              - key: get_environments.py
+                path: get_environments.py
           - name: docs
             emptyDir: {}
           securityContext:

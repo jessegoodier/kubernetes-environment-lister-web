@@ -30,7 +30,7 @@ Then:
 
 ```sh
 kubectl create ns environment-lister
-kubectl create cm list-environments -n environment-lister --from-file list-environments.py
+kubectl create cm get-environments -n environment-lister --from-file get_environments.py
 kubectl apply -f ./manifests -n environment-lister
 ```
 
@@ -41,7 +41,7 @@ Note that the nginx-web will have a status of `ContainerCreating` until the cron
 A pod manifest is included for one-off runs of the python script. This is useful for debugging or if you don't want to wait for the cronjob to run.
 
 ```sh
-kubectl create cm list-environments -n environment-lister --from-file list-environments.py
+kubectl create cm get_environments -n environment-lister --from-file get_environments.py
 kubectl apply -f ./manifests/rbac.yaml -n environment-lister
 kubectl apply -f ./testing-pod.yaml -n environment-lister
 ```
