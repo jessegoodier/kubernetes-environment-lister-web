@@ -4,11 +4,9 @@ Simple tool to find all the namespaces with ingresses and list the pods/containe
 
 Why was this made?
 
-1. Easy method for the less cli-oriented folks to find environments to test against.
+1. Easy to use: No need to type commands, just find the environment you need through a simple interface.
 2. Read-only cluster-wide visibility.
-3. Limited local-namespace rights to restart the web-server deployment.
-4. No need for cluster-auth. The web-service is read-only.
-5. Simplicity. At Kubecost, we maintain many different configs for QA and this utility was created to help our engineers find specific releases for testing.
+3. Limited local namespace rights: to restart the web-server deployment.
 
 TODO:
 
