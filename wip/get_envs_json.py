@@ -7,11 +7,16 @@ ClusterName = os.getenv("CLUSTER_NAME", "null")
 output = {"ClusterName": ClusterName, "Namespaces": []}
 
 def get_namespaces():
+    # get namespaces that have ingresses 
+    # namespaces = subprocess.run(["kubectl", "get", "ingress", "--all-namespaces", "-o", "json"], capture_output=True, text=True)
+    # namespaces_json = json.loads(namespaces.stdout)
+    # namespaces = sorted(set(item.get('metadata', {}).get('namespace') for item in namespaces.get('items', [])))
     # Get all namespaces
-    namespaces = subprocess.run(["kubectl", "get", "ingress", "--all-namespaces", "-o", "json"], capture_output=True, text=True)
-    namespaces = json.loads(namespaces.stdout)
-    namespaces = sorted(set(item.get('metadata', {}).get('namespace') for item in namespaces.get('items', [])))
-    return namespaces
+    namespaces = subprocess.run(["kubectl", "get", "namespaces", "-o", "json"], capture_output=True, text=True)
+    namespaces_json = json.loads(namespaces.stdout)
+    namespace_names = [item['metadata']['name'] for item in namespaces_json['items']]
+    print(f"Processing namespaces: {namespace_names.count}")
+    return namespace_names
 
 def get_ingress(ns):
     # Get all ingress
@@ -68,3 +73,4 @@ for ns in namespaces:
 
 with open("docs/index.json", "w") as f:
     f.write(json.dumps(output, indent=2))
+

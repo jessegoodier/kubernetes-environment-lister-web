@@ -22,7 +22,7 @@
       <tbody></tbody>
     </table>
     <script>
-        fetch("cluster.json")
+        fetch("index.json")
           .then((response) => response.json())
           .then((data) => {
             const tableBody = document
@@ -39,22 +39,21 @@
       
                   var reason = "";
                   var status = Object.keys(container.Status)[0];
-                  if (status === "running") {
-                    reason = container.Status[0];
-                  } else {
-                    reason += status + ": " + container.Status[status].reason + ":<br>" + container.Status[status].message;
-                  }
-                  
+                  var reason = JSON.stringify(container.Status, null, 2);
+                  reason = reason.replace(/,/g, ',<br>');
+                  reason = reason.replace(/}/g, '}<br>');
+                  reason = reason.replace(/{/g, '{<br>');
+
                   startedAt = container.Status[status].startedAt;
                   thisRow = `
                     <td>${pod.Pod}</td>
                     <td>${container.ContainerName}</td>
                     <td>${container.Image}</td>`
-                    if (status === "running" || status === "terminated") {
+                    if (status === "running") {
                       thisRow += `<td>${status}</td>
                                   <td>${startedAt}</td>`
-                    } else if (status === "NotReady") {
-                      thisRow += `<td bgcolor="yellow"><div class="tooltip"><u>${status}</u><span class="tooltiptext">${reason}</span></div></td>
+                    } else if (status === "terminated") {
+                      thisRow += `<td><div class="tooltip"><u>${status}</u><span class="tooltiptext">${reason}</span></div></td>
                                   <td>-</td>`
                     } else {
                       thisRow += `<td bgcolor="darkred"><div class="tooltip"><u>${status}</u><span class="tooltiptext">${reason}</span></div></td>
