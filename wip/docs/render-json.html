@@ -22,7 +22,7 @@
       <tbody></tbody>
     </table>
     <script>
-        fetch("index.json")
+        fetch("cluster.json")
           .then((response) => response.json())
           .then((data) => {
             const tableBody = document
@@ -50,9 +50,12 @@
                     <td>${pod.Pod}</td>
                     <td>${container.ContainerName}</td>
                     <td>${container.Image}</td>`
-                    if (status === "running") {
+                    if (status === "running" || status === "terminated") {
                       thisRow += `<td>${status}</td>
                                   <td>${startedAt}</td>`
+                    } else if (status === "NotReady") {
+                      thisRow += `<td bgcolor="yellow"><div class="tooltip"><u>${status}</u><span class="tooltiptext">${reason}</span></div></td>
+                                  <td>-</td>`
                     } else {
                       thisRow += `<td bgcolor="darkred"><div class="tooltip"><u>${status}</u><span class="tooltiptext">${reason}</span></div></td>
                                   <td>-</td>`
