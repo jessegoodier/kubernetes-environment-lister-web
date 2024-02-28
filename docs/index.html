@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>envs on {ClusterName}</title>
+    <link rel="icon" href="https://raw.githubusercontent.com/jessegoodier/kubernetes-environment-lister-web/main/docs/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" type="text/css" href="css/styles.css">
+</head><body>
+<h1>qa-eks</h1>
+
+<h2>Namespace: environment-lister</h2>
+
+<p><a href="https://envs.qa-eks.kubecost.io/">https://envs.qa-eks.kubecost.io/</a></p>
+
+<table>
+<thead>
+<tr>
+  <th>Name</th>
+  <th>Namespace</th>
+  <th>Revision</th>
+  <th>Updated</th>
+  <th>Status</th>
+  <th>Chart</th>
+  <th>App Version</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>oauth2-proxy</td>
+  <td>environment-lister</td>
+  <td>1</td>
+  <td>2024-02-20 10:22:09.638462734 -0500 -0500</td>
+  <td>deployed</td>
+  <td>oauth2-proxy-6.24.1</td>
+  <td>7.6.0</td>
+</tr>
+</tbody>
+</table>
+
+<p><br></p>
+
+<p><details><summary>Pods</summary></p>
+
+<table>
+<thead>
+<tr>
+  <th>Pod</th>
+  <th>Container Name</th>
+  <th>Image</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>environment-lister-web-f44bb7965-cwphk</td>
+  <td>environment-lister</td>
+  <td>nginxinc/nginx-unprivileged</td>
+</tr>
+<tr>
+  <td>environment-lister-web-f44bb7965-s8qs8</td>
+  <td>environment-lister</td>
+  <td>nginxinc/nginx-unprivileged</td>
+</tr>
+<tr>
+  <td>get-environments-28479699-xk9b2</td>
+  <td>get-environments</td>
+  <td>jgoodier/markdown2-kubectl:0.0.4</td>
+</tr>
+<tr>
+  <td>oauth2-proxy-6b79859857-9hpf4</td>
+  <td>oauth2-proxy</td>
+  <td>quay.io/oauth2-proxy/oauth2-proxy:v7.6.0</td>
+</tr>
+</tbody>
+</table>
+
+<p></details>
+<br></p>
+
+<h2>Namespace: kubecost-single-cluster</h2>
+
+<p><a href="https://standalone.qa-eks.kubecost.io/">https://standalone.qa-eks.kubecost.io/</a></p>
+
+<table>
+<thead>
+<tr>
+  <th>Name</th>
+  <th>Namespace</th>
+  <th>Revision</th>
+  <th>Updated</th>
+  <th>Status</th>
+  <th>Chart</th>
+  <th>App Version</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>kubecost-single-cluster</td>
+  <td>kubecost-single-cluster</td>
+  <td>17</td>
+  <td>2024-02-24 09:30:57.921076 -0400 AST</td>
+  <td>deployed</td>
+  <td>cost-analyzer-v0.0.1708762629</td>
+  <td>v0.0.1708762629</td>
+</tr>
+</tbody>
+</table>
+
+<p><br></p>
+</body></html>

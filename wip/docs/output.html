@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>JSON to Table</title>
+    <link rel="icon" href="https://raw.githubusercontent.com/jessegoodier/kubernetes-environment-lister-web/main/docs/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" type="text/css" href="css/styles.css">
+  </head>
+  <body>
+    <select id="namespaceFilter" onchange="filterTable()">
+      <option value="">All Namespaces</option>
+    </select>
+    <table id="jsonTable">
+      <thead>
+        <tr>
+          <th>Pod</th>
+          <th>Container</th>
+          <th>Image</th>
+          <th>Status</th>
+          <th>StartedAt</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+    <script>
+        fetch("index.json")
+          .then((response) => response.json())
+          .then((data) => {
+            const tableBody = document
+              .getElementById("jsonTable")
+              .getElementsByTagName("tbody")[0];
+            const namespaceFilter = document.getElementById("namespaceFilter");
+            const namespaces = new Set();
+            data.Namespaces.forEach((namespace) => {
+              namespaces.add(namespace.Namespace);
+
+              namespace.Pods.forEach((pod) => {
+                pod.Containers.forEach((container) => {
+                  const newRow = tableBody.insertRow();
+      
+                  var reason = "";
+                  var status = Object.keys(container.Status)[0];
+                  if (status === "running") {
+                    reason = container.Status[0];
+                  } else {
+                    reason += status + ": " + container.Status[status].reason + ":<br>" + container.Status[status].message;
+                  }
+                  
+                  startedAt = container.Status[status].startedAt;
+                  thisRow = `
+                    <td>${pod.Pod}</td>
+                    <td>${container.ContainerName}</td>
+                    <td>${container.Image}</td>`
+                    if (status === "running") {
+                      thisRow += `<td>${status}</td>
+                                  <td>${startedAt}</td>`
+                    } else {
+                      thisRow += `<td bgcolor="darkred"><div class="tooltip"><u>${status}</u><span class="tooltiptext">${reason}</span></div></td>
+                                  <td>-</td>`
+                    }
+                    
+                    newRow.innerHTML = thisRow;
+                  
+                });
+              });
+            });
+            namespaces.forEach((namespace) => {
+              const option = document.createElement("option");
+              option.value = namespace;
+              option.text = namespace;
+              namespaceFilter.add(option);
+            });
+          });
+      
+        function filterTable() {
+          const filter = document.getElementById("namespaceFilter").value;
+          const table = document.getElementById("jsonTable");
+          for (let i = 1, row; (row = table.rows[i]); i++) {
+            row.style.display =
+              filter === "" || row.cells[0].innerHTML === filter ? "" : "none";
+          }
+        }
+      </script>
+      <script>
+        const tooltips = document.querySelectorAll('.tooltip');
+
+        tooltips.forEach(tooltip => {
+          tooltip.addEventListener('mouseover', () => {
+            tooltip.querySelector('.tooltiptext').style.visibility = 'visible';
+          });
+
+          tooltip.addEventListener('mouseout', () => {
+            tooltip.querySelector('.tooltiptext').style.visibility = 'hidden';
+          });
+        });
+      </script>
+  </body>
+</html>

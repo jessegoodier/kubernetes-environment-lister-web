@@ -114,6 +114,7 @@ def manage_configmap():
 
 # Call the functions
 delete_existing_file()
+
 if ClusterName != "null": write_cluster_name()
 
 namespaces = get_namespaces()

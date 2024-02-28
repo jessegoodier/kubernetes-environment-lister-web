@@ -10,10 +10,13 @@ Why was this made?
 
 TODO:
 
-1. Watch ingresses and helm resources instead of a cronJob?
-2. Multi-cluster
-3. Search
-4. self-update option
+1. refactor to output json
+2. Watch ingresses and helm resources instead of a cronJob?
+3. Multi-cluster (with mongodb?)
+4. Search
+5. self-update option
+6. recommend fixes for non-running pods (using AI?)
+7. get all pods, not just those in namespaces with ingresses, add option to filter in UI
 
 Alternatives to consider:
 
@@ -50,7 +53,7 @@ Then:
 
 ```sh
 kubectl create ns environment-lister
-kubectl create cm get-environments-script -n environment-lister --from-file get_environments.py
+kubectl create cm get-environments -n environment-lister --from-file get_environments.py
 kubectl apply -f ./manifests -n environment-lister
 ```
 
@@ -69,7 +72,7 @@ You'll likely want to expose the service with a protected ingress. An example of
 A pod manifest is included for one-off runs of the python script. This is useful for debugging or if you don't want to wait for the cronjob to run.
 
 ```sh
-kubectl create cm get_environments -n environment-lister --from-file get_environments.py
+kubectl create cm get-environments -n environment-lister --from-file get_environments.py
 kubectl apply -f ./manifests/rbac.yaml -n environment-lister
 kubectl apply -f ./testing-pod.yaml -n environment-lister
 ```
