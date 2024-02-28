@@ -5,7 +5,7 @@
       "Namespace": "agent-to-nightly-agg",
       "Ingress": [
         {
-          "Host": "agent-to-nightly-agg.qa-azure1.kubecost.xyz",
+          "Host": "agent-to-nightly-agg.qa-eks.kubecost.io",
           "Path": "/"
         }
       ],
@@ -85,7 +85,7 @@
       "Namespace": "environment-lister",
       "Ingress": [
         {
-          "Host": "envs.qa-azure1.kubecost.xyz",
+          "Host": "envs.qa-eks.kubecost.io",
           "Path": "/"
         }
       ],
@@ -178,11 +178,11 @@
       "Namespace": "kubecost",
       "Ingress": [
         {
-          "Host": "kubecost.qa-azure1.kubecost.xyz",
+          "Host": "kubecost.qa-eks.kubecost.io",
           "Path": "/"
         },
         {
-          "Host": "kubecost-prom.qa-azure1.kubecost.xyz",
+          "Host": "kubecost-prom.qa-eks.kubecost.io",
           "Path": "/"
         }
       ],
@@ -327,11 +327,11 @@
       "Namespace": "kubecost-byo-prom",
       "Ingress": [
         {
-          "Host": "byo-prom.qa-azure1.kubecost.xyz",
+          "Host": "byo-prom.qa-eks.kubecost.io",
           "Path": "/"
         },
         {
-          "Host": "saml-filtering.qa-azure1.kubecost.xyz",
+          "Host": "saml-filtering.qa-eks.kubecost.io",
           "Path": "/"
         }
       ],
@@ -420,7 +420,7 @@
       "Namespace": "kubecost-federated-primary",
       "Ingress": [
         {
-          "Host": "azure-fed.qa-azure1.kubecost.xyz",
+          "Host": "azure-fed.qa-eks.kubecost.io",
           "Path": "/"
         }
       ],
@@ -537,11 +537,11 @@
       "Namespace": "kubecost-latesttag",
       "Ingress": [
         {
-          "Host": "latesttag.qa-azure1.kubecost.xyz",
+          "Host": "latesttag.qa-eks.kubecost.io",
           "Path": "/"
         },
         {
-          "Host": "latesttag-prom.qa-azure1.kubecost.xyz",
+          "Host": "latesttag-prom.qa-eks.kubecost.io",
           "Path": "/"
         }
       ],
@@ -644,11 +644,11 @@
       "Namespace": "kubecost-nightly",
       "Ingress": [
         {
-          "Host": "nightly.qa-azure1.kubecost.xyz",
+          "Host": "nightly.qa-eks.kubecost.io",
           "Path": "/"
         },
         {
-          "Host": "nightly-prom.qa-azure1.kubecost.xyz",
+          "Host": "nightly-prom.qa-eks.kubecost.io",
           "Path": "/"
         }
       ],
@@ -770,7 +770,7 @@
       "Namespace": "kubecost-thanos-primary",
       "Ingress": [
         {
-          "Host": "kubecost-thanos.qa-azure1.kubecost.xyz",
+          "Host": "kubecost-thanos.qa-eks.kubecost.io",
           "Path": "/"
         }
       ],
@@ -915,11 +915,11 @@
       "Namespace": "kubecost102",
       "Ingress": [
         {
-          "Host": "kubecost102.qa-azure1.kubecost.xyz",
+          "Host": "kubecost102.qa-eks.kubecost.io",
           "Path": "/"
         },
         {
-          "Host": "kubecost102-prom.qa-azure1.kubecost.xyz",
+          "Host": "kubecost102-prom.qa-eks.kubecost.io",
           "Path": "/"
         }
       ],
@@ -999,7 +999,7 @@
       "Namespace": "kubecost107",
       "Ingress": [
         {
-          "Host": "107.qa-azure1.kubecost.xyz",
+          "Host": "107.qa-eks.kubecost.io",
           "Path": "/"
         }
       ],
@@ -1079,7 +1079,7 @@
       "Namespace": "kubecost108",
       "Ingress": [
         {
-          "Host": "108.qa-azure1.kubecost.xyz",
+          "Host": "108.qa-eks.kubecost.io",
           "Path": "/"
         }
       ],
@@ -1224,7 +1224,7 @@
       "Namespace": "monitoring",
       "Ingress": [
         {
-          "Host": "byo-prom-prom.qa-azure1.kubecost.xyz",
+          "Host": "byo-prom-prom.qa-eks.kubecost.io",
           "Path": "/"
         }
       ],
@@ -1383,7 +1383,7 @@
       "Namespace": "opencost",
       "Ingress": [
         {
-          "Host": "opencost.qa-azure1.kubecost.xyz",
+          "Host": "opencost.qa-eks.kubecost.io",
           "Path": "/"
         }
       ],
