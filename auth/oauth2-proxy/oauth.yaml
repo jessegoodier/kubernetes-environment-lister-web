@@ -13,8 +13,8 @@ ingress:
     nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
   className: nginx
   hosts:
-  - envs.qa-azure.kubecost.com
+  - kubecost.qa-eks.kubecost.com
   tls:
   - hosts:
-    - envs.qa-azure.kubecost.com
+    - kubecost.qa-eks.kubecost.com
     secretName: envs-ingress-tls

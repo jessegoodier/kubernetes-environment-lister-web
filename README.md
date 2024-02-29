@@ -1,5 +1,12 @@
 # kubernetes-web-environment-lister
 
+This has been replaced by <https://github.com/jessegoodier/e10s>
+
+Though the markdown2 example below is still useful enough.
+
+
+## What was this?
+
 Simple tool to find all the namespaces with ingresses and list the pods/containers/images.
 
 Why was this made?
